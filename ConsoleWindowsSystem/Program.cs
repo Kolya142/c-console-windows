@@ -1,5 +1,6 @@
 ﻿using ConsoleWindowsSystem;
 using ConsoleWindowsSystem.Engine;
+using ConsoleWindowsSystem.Windows;
 using System.Drawing;
 
 
@@ -27,6 +28,11 @@ class Program {
 		int t = 0;
 		while (true)
 		{
+			if (Console.WindowWidth*Console.WindowHeight != graphics.Drawer.buffer.Length)
+			{
+				graphics.Drawer.size = new Point(Console.WindowWidth, Console.WindowHeight);
+				graphics.Clear();
+			}
 			t++;
 			int last_button = mouse_button;
 			int but = mouse.GetMouseButtons();
