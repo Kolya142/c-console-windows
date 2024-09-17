@@ -2,6 +2,9 @@
 using ConsoleWindowsSystem.Engine;
 using ConsoleWindowsSystem.Windows;
 using System.Drawing;
+using System.Reflection;
+using System.IO;
+using System;
 
 
 public class LogEntry
@@ -9,7 +12,41 @@ public class LogEntry
 	public int time { get; set; }
 	public string text { get; set; }
 }
+
 class Program {
+	static List<BaseWindow> GetWindows()
+	{
+		string[] files = Directory.GetFiles("dlls");
+		List<BaseWindow> windows = new List<BaseWindow>();
+		foreach (string file in files)
+		{
+			if (!file.EndsWith(".dll")) {
+				continue;
+			}
+			Assembly asm = Assembly.LoadFrom(file);
+			Type? t = asm.GetType("MyWindow.Main");
+			Console.WriteLine(asm.GetTypes());
+			if (t != null)
+			{
+				object? obj = t.GetMethod("Create", BindingFlags.Static | BindingFlags.Public).Invoke(null, new object[] { });
+				Console.Write(obj);
+				if (obj != null)
+				{
+					windows.Add((BaseWindow)obj);
+					Console.WriteLine($"DllLoader Ok: Succesfly create object Main from {file}");
+				}
+				else
+				{
+					Console.WriteLine($"DllLoader ERROR: failed to create object Main from {file}");
+				}
+			}
+			else
+			{
+				Console.WriteLine($"DllLoader ERROR: failed to load type Main from {file}");
+			}
+		}
+		return windows;
+	}
 	static void Main(string[] args) {
 		List<LogEntry> log = new();
 		Graphics graphics = new Graphics();
@@ -20,6 +57,8 @@ class Program {
 			new SpawnMenuWindow(system),
 			new CurrentTimeWindow(),
 		};
+		system.windows.AddRange(GetWindows());
+		//return;
 		int mouse_button = -1;
 		BaseWindow? grapped = null;
 		bool size = false;

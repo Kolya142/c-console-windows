@@ -11,4 +11,19 @@
     <PackageReference Include="PInvoke.Windows.Core" Version="0.7.124" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="dlls\MyWindow.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="dlls\MyWindowDLL.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Windows">
+      <HintPath>dlls\Windows.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

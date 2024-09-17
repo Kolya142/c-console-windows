@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleWindowsSystem.Windows
 {
-	public class BrowserWindow : Window
+	public class BrowserWindow : WindowWithBuffer
 	{
 		Parser parser = new();
 		public override WindowFlags flags => WindowFlags.Closable | WindowFlags.Resizable;
@@ -20,6 +20,7 @@ namespace ConsoleWindowsSystem.Windows
 		{
 			width = 50;
 			height = 30;
+			init();
 			parser.parser(Request("127.0.0.1", 91, "/"));
 			refresh.on_click = () => { parser.parser(Request("127.0.0.1", 91, url)); };
 		}
@@ -42,16 +43,16 @@ namespace ConsoleWindowsSystem.Windows
 				switch (command.type_)
 				{
 					case "Hr":
-						for (int i = x + 1; i < x + width; i++)
+						for (int i = 0; i < width; i++)
 						{
-							graphics.Point(i, y + 1 + j, '═');
+							graphics.Point(i, j, '═');
 						}
 						break;
 					case "Text":
-						graphics.Text(x + 1, y + 1 + j, ((CText)command).text);
+						graphics.Text(0, j, ((CText)command).text);
 						break;
 					case "Button":
-						graphics.Text(x + 1, y + 1 + j, ((CButton)command).text);
+						graphics.Text(0, j, ((CButton)command).text);
 						if (last_button == -1 && mouse_button == 0 && mouse_pos.X >= x + 1 && mouse_pos.X < x + 1 + ((CButton)command).text.Length && mouse_pos.Y >= y + 1 + j && mouse_pos.Y < y + 2 + j) 
 						{
 							parser.parser(Request("127.0.0.1", 91, ((CButton)command).url));
@@ -62,8 +63,8 @@ namespace ConsoleWindowsSystem.Windows
 				j++;
             }
 			int v = 5 + 1 + 9 + 1 + 2 + 1 + url.Length + 1;
-			graphics.Text(x + 1 + v + 1, y + 1, "refrash");
-			refresh.update(mouse_button, mouse_pos, x + 1 + v + 1, y + 1, 7, 1);
+			graphics.Text(v, 0, "refrash");
+			refresh.update(mouse_button, mouse_pos, x + v + 1, y + 1, 7, 1);
 			last_button = mouse_button;
         }
 	}

@@ -21,7 +21,7 @@ namespace ConsoleWindowsSystem.Windows
         public int height { get; set; }
         public virtual WindowFlags flags { get; } = WindowFlags.None;
         protected abstract void DrawSurface(POINT mouse_pos, int mouse_button, GraphicsDrawer graphics);
-        public void Draw(POINT mouse_pos, int mouse_button, GraphicsDrawer graphics)
+        public virtual void Draw(POINT mouse_pos, int mouse_button, GraphicsDrawer graphics)
         {
             DrawBorder(mouse_pos, mouse_button, graphics);
             DrawSurface(mouse_pos, mouse_button, graphics);

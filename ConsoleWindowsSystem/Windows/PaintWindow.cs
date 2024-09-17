@@ -7,19 +7,19 @@ namespace ConsoleWindowsSystem.Windows
 	public class PaintWindow : Window
 	{
 		public override WindowFlags flags => WindowFlags.Closable;
-		public char[,] buffer = new char[50, 30];
+		public char[,] buffer = new char[70, 30];
 		public char color = 'c';
 		public int lx = -1;
 		public int ly = -1;
 		public PaintWindow() {
-			for (int i = 0; i < 50; i++)
+			for (int i = 0; i < 70; i++)
 			{
 				for (int j = 0; j < 30; j++)
 				{
 					buffer[i, j] = '.';
 				}
 			}
-			width = 51; height = 32;
+			width = 71; height = 32;
 		}
 		public void line(Point p1, Point p2)
 		{
@@ -54,14 +54,14 @@ namespace ConsoleWindowsSystem.Windows
 		}
 		protected override void DrawSurface(Mouse.POINT mouse_pos, int mouse_button, GraphicsDrawer graphics)
 		{
-			for (int i = 0; i < 50; i++)
+			for (int i = 0; i < 70; i++)
 			{
 				for (int j = 0; j < 30; j++)
 				{
 					graphics.Point(x + 1 + i, y + 1 + j, buffer[i, j]);
 				}
 			}
-			string colors = "*c#@%^1234567890. ";
+			string colors = "1234567890-=_+qwertyuiopasdfghjklzxcvbnm,.?@#$%^&*[];'\\,./ ";
 			graphics.Text(x + 1, y - 1 + height, colors);
 			graphics.Point(x + 1 + colors.Length + 1, y - 1 + height, '[');
 			graphics.Point(x + 1 + colors.Length + 2, y - 1 + height, color);
