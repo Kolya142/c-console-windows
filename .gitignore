@@ -8,6 +8,7 @@
 
 # Build results
 
+.vs
 [Dd]ebug/
 [Rr]elease/
 x64/
@@ -131,3 +132,4 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+/.vs
